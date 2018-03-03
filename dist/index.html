@@ -1,0 +1,50 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.11.0/themes/prism.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/CodeFlask.js/0.2.0/codeflask.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.11.0/plugins/line-numbers/prism-line-numbers.min.css" />
+  <title>Welcome Message Builder</title>
+
+  <style>
+    #editor, iframe {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      margin: 0;
+      display: grid;
+      height: 100vh;
+      width: 100vw;
+      grid-gap: 10px;
+      overflow: hidden;
+    }
+
+    .left {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .right {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="left">
+    <textarea id="editor" spellcheck="false"></textarea>
+  </div>
+  <div class="right">
+    <iframe seamless></iframe>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
