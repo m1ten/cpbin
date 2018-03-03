@@ -20,18 +20,18 @@
 </style>
 
 <nav class="navWrapper">
-  <div class="navButton" to-page="home">Home</div>
-  <div class="navButton" to-page="test">Test</div>
+  <div class="navButton" data-to-page="home">Home</div>
+  <div class="navButton" data-to-page="test">Test</div>
 </nav>
 
 <hr>
 
-<div class="navPage visible" page="home">
+<div class="navPage visible" data-page="home">
   Home
-  <a to-page="test">Go to test page</a>
+  <a data-to-page="test">Go to test page</a>
 </div>
 
-<div class="navPage" page="test">
+<div class="navPage" data-page="test">
   Test
 </div>
 
@@ -40,7 +40,7 @@
     var oldPages = Array.from(document.querySelectorAll('div.navPage.visible'))
     oldPages.forEach(function (page) { page.classList.remove('visible') })
 
-    var page = document.querySelector('[page="' + pageName + `"]`)
+    var page = document.querySelector('[data-page="' + pageName + `"]`)
     if (!page) return
 
     page.classList.add('visible')
@@ -48,8 +48,8 @@
 
   document.addEventListener('click', function (event) {
     if (!event.target) return;
-    if (event.target.getAttribute('to-page')) {
-      showPage(event.target.getAttribute('to-page'))
+    if (event.target.getAttribute('data-to-page')) {
+      showPage(event.target.getAttribute('data-to-page'))
     }
   })
 </script>

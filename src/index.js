@@ -3,35 +3,13 @@ import defaultUserInput from './user_input.html'
 
 const input = document.querySelector('textarea')
 const iframe = document.querySelector('iframe')
+const errorContainer = document.querySelector('.footer')
 
-// http://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
-
-function insertAtCursor(myField, myValue) {
-    //IE support
-    if (document.selection) {
-        myField.focus();
-        sel = document.selection.createRange();
-        sel.text = myValue;
-    }
-    //MOZILLA and others
-    else if (myField.selectionStart || myField.selectionStart == '0') {
-        var startPos = myField.selectionStart;
-        var endPos = myField.selectionEnd;
-        myField.value = myField.value.substring(0, startPos)
-            + myValue
-            + myField.value.substring(endPos, myField.value.length);
-        myField.selectionStart = startPos + myValue.length;
-        myField.selectionEnd = startPos + myValue.length;
-    } else {
-        myField.value += myValue;
-    }
-}
-
-function debounce (ms, fn) {
+function debounce(ms, fn) {
     let timeout = null
     let savedArgs
 
-    return function(...args) {
+    return function (...args) {
         savedArgs = args
 
         clearTimeout(timeout)
@@ -42,21 +20,29 @@ function debounce (ms, fn) {
     }
 }
 
-input.addEventListener('input', debounce(1000, function () {
-    iframe.srcdoc = defaultSource
-        .replace('[CONTENT]', input.value)
+const editor = ace.edit("editor")
+editor.setTheme("ace/theme/github")
+editor.session.setMode("ace/mode/html")
 
-    localStorage.setItem('userInput', input.value)
+const session = editor.getSession()
+session.setUseWrapMode(true)
+session.on("changeAnnotation", function () {
+    const annotations = session.getAnnotations()
+    const filtered = annotations.filter(a => !a.text.includes('<!DOCTYPE html>'))
+
+    if (annotations.length != filtered.length) {
+        session.setAnnotations(filtered)
+    }
+});
+
+editor.on('change', debounce(1000, function () {
+    iframe.srcdoc = defaultSource
+        .replace('[CONTENT]', editor.getValue())
+
+    localStorage.setItem('userInput', editor.getValue())
 }))
 
-input.addEventListener('keydown', function (event) {
-    if (event.key != "Tab") return
-
-    event.preventDefault()
-    insertAtCursor(input, '  ')
-})
-
 const starterInput = localStorage.getItem('userInput') || defaultUserInput
-input.value = starterInput
+editor.setValue(starterInput)
 iframe.srcdoc = defaultSource
     .replace('[CONTENT]', starterInput)
