@@ -42,7 +42,24 @@ editor.on('change', debounce(1000, function () {
     localStorage.setItem('userInput', editor.getValue())
 }))
 
-const starterInput = localStorage.getItem('userInput') || defaultUserInput
+const getQuery = () => new URLSearchParams(location.href.includes('?') ? location.href.substr(location.href.indexOf('?')) : '')
+
+const query = getQuery()
+const starterInput = query.has('code') ? query.get('code') :
+    localStorage.getItem('userInput') || defaultUserInput
 editor.setValue(starterInput)
 iframe.srcdoc = defaultSource
     .replace('[CONTENT]', starterInput)
+
+
+document.querySelector('button.share').addEventListener('click', () => {
+    const query = getQuery()
+    query.set('code', editor.getValue())
+    alert("Sharable URL now in address bar")
+    location.assign(location.protocol + location.pathname + '?' + query.toString())
+}, { passive: true })
+
+document.querySelector('button.reset').addEventListener('click', () => {
+    localStorage.removeItem('userInput')
+    location.href = location.protocol + location.pathname
+}, { passive: true })
