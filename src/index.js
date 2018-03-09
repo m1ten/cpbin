@@ -1,5 +1,10 @@
 import defaultSource from './server.html'
-import defaultUserInput from './user_input.html'
+import tabPreset from './tabPreset.html'
+
+const presets = {
+    empty: '',
+    tabs: tabPreset
+}
 
 const input = document.querySelector('textarea')
 const iframe = document.querySelector('iframe')
@@ -46,7 +51,8 @@ const getQuery = () => new URLSearchParams(location.href.includes('?') ? locatio
 
 const query = getQuery()
 const starterInput = query.has('code') ? query.get('code') :
-    localStorage.getItem('userInput') || defaultUserInput
+    localStorage.getItem('userInput') != null ? localStorage.getItem('userInput') :
+    tabPreset
 editor.setValue(starterInput)
 iframe.srcdoc = defaultSource
     .replace('[CONTENT]', starterInput)
@@ -59,7 +65,11 @@ document.querySelector('button.share').addEventListener('click', () => {
     location.assign(location.protocol + location.pathname + '?' + query.toString())
 }, { passive: true })
 
-document.querySelector('button.reset').addEventListener('click', () => {
-    localStorage.removeItem('userInput')
-    location.href = location.protocol + location.pathname
+const presetSelect = document.querySelector('select.preset')
+presetSelect.addEventListener('change', () => {
+    editor.setValue(presets[presetSelect.value])
 }, { passive: true })
+
+document.querySelector('button.toggleView').addEventListener('click', () => {
+    document.querySelector('.container').classList.toggle('hidePreview')
+})
