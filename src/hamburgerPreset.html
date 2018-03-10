@@ -1,0 +1,115 @@
+<style>
+  .navPage:not(.visible) {
+    display: none;
+  }
+
+  .hamburger {
+    /* Visual styles */
+    background: rgba(196, 218, 255, 0.8);
+    transition: left 0.3s;
+    height: 100vh;
+    
+    /* Essential styles */
+    /* Needed to make scrolling work on iOS */
+    -webkit-overflow-scrolling: touch;
+    z-index: 1000;
+    position: fixed;
+    width: 250px;
+    left: -250px;
+    top: 0;
+    overflow-y: auto;
+  }
+
+  .hamburger.visible {
+    left: 0;
+  }
+
+  .hamburger span {
+    display: block;
+    padding: 0.5em;
+    text-align: center;
+  }
+
+  .hamburger span:not(:last-child) {
+    border-bottom: 1px solid #000000;
+  }
+
+  .hamburger-toggle {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    transition: left 0.3s;
+
+    padding: 0.5em;
+    background: #c4daff;
+    border: 1px solid #000000;
+  }
+
+  .hamburger.visible~.hamburger-toggle {
+    left: 250px;
+  }
+
+  .navButton {
+    margin: 5px 10px;
+    padding: 10px;
+    background: #2976f2;
+  }
+
+  [data-to-page] {
+    cursor: pointer;
+  }
+</style>
+
+<nav class="hamburger visible">
+  <span data-to-page="home">Home</span>
+  <span data-to-page="test">Test</span>
+  <span data-to-page="home">Home</span>
+  <span data-to-page="test">Test</span>
+  <span data-to-page="home">Home</span>
+  <span data-to-page="test">Test</span>
+  <span data-to-page="home">Home</span>
+  <span data-to-page="test">Test</span>
+  <span data-to-page="home">Home</span>
+  <span data-to-page="test">Test</span>
+</nav>
+
+<button class="hamburger-toggle">&#9776; Menu</button>
+
+<div class="navPage visible" data-page="home">
+  Home
+  <a data-to-page="test">Go to test page</a>
+</div>
+
+<div class="navPage" data-page="test">
+  Test
+</div>
+
+<script>
+  function showPage(pageName) {
+    var oldPages = Array.from(document.querySelectorAll('.navPage.visible'))
+    oldPages.forEach(function (page) { page.classList.remove('visible') })
+
+    var page = document.querySelector('[data-page="' + pageName + `"]`)
+    if (!page) return
+
+    page.classList.add('visible')
+  }
+
+  var hamburger = document.querySelector('.hamburger')
+
+  document.querySelector('.hamburger-toggle').addEventListener('click', function () {
+    hamburger.classList.toggle('visible')
+  })
+
+  document.addEventListener('click', function (event) {
+    if (!event.target) return;
+    var toPage = event.target.getAttribute('data-to-page')
+    if (toPage) {
+      showPage(toPage)
+      if (event.target.parentElement == hamburger) {
+        hamburger.classList.remove('visible')
+      }
+    }
+  })
+</script>

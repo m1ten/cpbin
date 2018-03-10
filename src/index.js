@@ -1,9 +1,11 @@
 import defaultSource from './server.html'
 import tabPreset from './tabPreset.html'
+import hamburgerPreset from './hamburgerPreset.html'
 
 const presets = {
     empty: '',
-    tabs: tabPreset
+    tabs: tabPreset,
+    hamburger: hamburgerPreset
 }
 
 const iframe = document.querySelector('iframe')
@@ -42,6 +44,7 @@ document.querySelector('button.share').addEventListener('click', () => {
 const presetSelect = document.querySelector('select.preset')
 presetSelect.addEventListener('change', () => {
     editor.setValue(presets[presetSelect.value])
+    iframe.srcdoc = defaultSource.replace('[CONTENT]', editor.getValue())
 }, { passive: true })
 
 document.querySelector('button.toggleView').addEventListener('click', () => {
