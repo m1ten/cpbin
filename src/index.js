@@ -12,6 +12,7 @@ const iframe = document.querySelector('iframe')
 
 const editor = window.editor = CodeMirror(document.querySelector('#editor'), {
     lineNumbers: true,
+    lineWrapping: true,
     styleActiveLine: true,
     matchBrackets: true,
     lint: true,
