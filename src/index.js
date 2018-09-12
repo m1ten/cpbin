@@ -1,11 +1,13 @@
 import defaultSource from './server.html'
 import tabPreset from './tabPreset.html'
 import hamburgerPreset from './hamburgerPreset.html'
+import variablePreset from './variablesPreset.html'
 
 const presets = {
     empty: '',
     tabs: tabPreset,
-    hamburger: hamburgerPreset
+    hamburger: hamburgerPreset,
+    variables: variablePreset
 }
 
 const iframe = document.querySelector('iframe')
@@ -20,6 +22,10 @@ const editor = window.editor = CodeMirror(document.querySelector('#editor'), {
     mode: "text/html"
 })
 editor.setSize("100%", "100%")
+
+editor.on('change', () => {
+    localStorage.setItem('userInput', editor.getValue())
+})
 
 const getQuery = () => new URLSearchParams(location.href.includes('?') ? location.href.substr(location.href.indexOf('?')) : '')
 
