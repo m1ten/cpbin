@@ -2,6 +2,7 @@ import defaultSource from './server.html'
 import tabPreset from './tabPreset.html'
 import hamburgerPreset from './hamburgerPreset.html'
 import variablePreset from './variablesPreset.html'
+import lz from 'lz-string'
 
 const presets = {
     empty: '',
@@ -30,9 +31,14 @@ editor.on('change', () => {
 const getQuery = () => new URLSearchParams(location.href.includes('?') ? location.href.substr(location.href.indexOf('?')) : '')
 
 const query = getQuery()
-const starterInput = query.has('code') ? query.get('code') :
-    localStorage.getItem('userInput') != null ? localStorage.getItem('userInput') :
-    tabPreset
+let starterInput = localStorage.getItem('userInput') != null ? localStorage.getItem('userInput') : tabPreset
+if (query.has('code')) {
+    starterInput = query.get('code')
+}
+if (query.has('lzcode')) {
+    starterInput = lz.decompressFromEncodedURIComponent(query.get('lzcode'))
+}
+
 editor.setValue(starterInput)
 iframe.srcdoc = defaultSource
     .replace('[CONTENT]', starterInput)
@@ -43,7 +49,7 @@ document.querySelector('button.run').addEventListener('click', () => {
 
 document.querySelector('button.share').addEventListener('click', () => {
     const query = getQuery()
-    query.set('code', editor.getValue())
+    query.set('lzcode', lz.compressToEncodedURIComponent(editor.getValue()))
     alert("Sharable URL now in address bar")
     location.assign(location.protocol + location.pathname + '?' + query.toString())
 }, { passive: true })
