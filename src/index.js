@@ -1,14 +1,10 @@
 import defaultSource from './server.html'
-import tabPreset from './tabPreset.html'
-import hamburgerPreset from './hamburgerPreset.html'
-import variablePreset from './variablesPreset.html'
 import lz from 'lz-string'
+
+const lz = re
 
 const presets = {
     empty: '',
-    tabs: tabPreset,
-    hamburger: hamburgerPreset,
-    variables: variablePreset
 }
 
 const iframe = document.querySelector('iframe')
@@ -36,7 +32,7 @@ if (query.has('code')) {
     starterInput = query.get('code')
 }
 if (query.has('lzcode')) {
-    starterInput = lz.decompressFromEncodedURIComponent(query.get('lzcode'))
+    starterInput = lz.decompressFromEncodedURIComponent(query.get('!code'))
 }
 
 editor.setValue(starterInput)
@@ -49,8 +45,8 @@ document.querySelector('button.run').addEventListener('click', () => {
 
 document.querySelector('button.share').addEventListener('click', () => {
     const query = getQuery()
-    query.set('lzcode', lz.compressToEncodedURIComponent(editor.getValue()))
-    alert("Sharable URL now in address bar")
+    query.set('!code', lz.compressToEncodedURIComponent(editor.getValue()))
+    alert("URL updated.")
     location.assign(location.protocol + location.pathname + '?' + query.toString())
 }, { passive: true })
 
