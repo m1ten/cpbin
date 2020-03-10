@@ -45,6 +45,8 @@ header {
 }
 
 header button, header select {
+  height: 10px;
+  width: 10px;
   border: 3px solid #003da0;
   background: transparent;
   margin: 0.5em;
