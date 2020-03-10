@@ -31,8 +31,8 @@ let starterInput = localStorage.getItem('userInput') != null ? localStorage.getI
 if (query.has('code')) {
     starterInput = query.get('code')
 }
-if (query.has('lzcode')) {
-    starterInput = lz.decompressFromEncodedURIComponent(query.get('!code'))
+if (query.has('newcode')) {
+    starterInput = new.decompressFromEncodedURIComponent(query.get('code'))
 }
 
 editor.setValue(starterInput)
@@ -45,16 +45,20 @@ document.querySelector('button.run').addEventListener('click', () => {
 
 document.querySelector('button.share').addEventListener('click', () => {
     const query = getQuery()
-    query.set('!code', lz.compressToEncodedURIComponent(editor.getValue()))
+    query.set('code', new.compressToEncodedURIComponent(editor.getValue()))
     alert("URL updated.")
     location.assign(location.protocol + location.pathname + '?' + query.toString())
-}, { passive: true })
+}, {
+    passive: true
+})
 
 const presetSelect = document.querySelector('select.preset')
 presetSelect.addEventListener('change', () => {
     editor.setValue(presets[presetSelect.value])
     iframe.srcdoc = defaultSource.replace('[CONTENT]', editor.getValue())
-}, { passive: true })
+}, {
+    passive: true
+})
 
 document.querySelector('button.toggleView').addEventListener('click', () => {
     document.querySelector('.container').classList.toggle('hidePreview')
