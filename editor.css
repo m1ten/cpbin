@@ -3,8 +3,8 @@
 }
 
 iframe {
-  height: 100%;
-  width: 100%;
+  height: 0%;
+  width: 0%;
 }
 
 #editor {
@@ -19,7 +19,7 @@ body {
 
 .container {
   display: grid;
-  height: 100vh;
+  height: 25vh;
   grid-template-areas: 
     "header header"
     "editor preview";
@@ -30,7 +30,7 @@ body {
 }
 
 .left {
-  max-width: 50vw;
+  max-width: 100vw;
   grid-area: editor;
 }
 
