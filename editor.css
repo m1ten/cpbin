@@ -8,7 +8,7 @@ iframe {
 }
 
 #editor {
-  width: 750px;
+  width: 1345px;
   height: 100%;
 }
 
@@ -19,11 +19,12 @@ body {
 
 .container {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "header header"
     "editor preview";
   grid-template-columns: 3fr 5fr;
 }
+
 .container.hidePreview {
   grid-template-columns: 15fr 0fr;
 }
@@ -51,11 +52,13 @@ header {
   display: flex;
 }
 
-header button, header select {
+header button,
+header select {
   border: 3px solid #003da0;
   background: transparent;
   margin: 0.5em;
 }
+
 header button:hover {
   background: rgba(0, 0, 255, 0.2);
 }
