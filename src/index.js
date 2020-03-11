@@ -1,15 +1,12 @@
 
 import defaultSource from './server.html'
-import tabPreset from './tabPreset.html'
-import hamburgerPreset from './hamburgerPreset.html'
-import variablePreset from './variablesPreset.html'
+// import tabPreset from './tabPreset.html'
+// import hamburgerPreset from './hamburgerPreset.html'
+// import variablePreset from './variablesPreset.html'
 import lz from 'lz-string'
 
 const presets = {
-    empty: '',
-    tabs: tabPreset,
-    hamburger: hamburgerPreset,
-    variables: variablePreset,
+    empty: ''
 }
 
 const iframe = document.querySelector('iframe')
