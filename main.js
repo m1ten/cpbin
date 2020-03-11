@@ -275,11 +275,11 @@
     const m = () => new URLSearchParams(location.href.includes("?") ? location.href.substr(location.href.indexOf("?")) : ""),
         v = m();
     let b = null != localStorage.getItem("userInput") ? localStorage.getItem("userInput") : s.a;
-    v.has("code") && (b = v.get("code")), v.has("l``zcode") && (b = d.a.decompressFromEncodedURIComponent(v.get("newcode"))), f.setValue(b), h.srcdoc = r.a.replace("[CONTENT]", b), document.querySelector("button.run").addEventListener("click", () => {
+    v.has("code") && (b = v.get("code")), v.has("lzcode") && (b = d.a.decompressFromEncodedURIComponent(v.get("lzcode"))), f.setValue(b), h.srcdoc = r.a.replace("[CONTENT]", b), document.querySelector("button.run").addEventListener("click", () => {
         h.srcdoc = r.a.replace("[CONTENT]", f.getValue())
     }), document.querySelector("button.share").addEventListener("click", () => {
         const e = m();
-        e.set("newcode", d.a.compressToEncodedURIComponent(f.getValue())), alert("Sharable URL now in address bar"), location.assign(location.protocol + location.pathname + "?" + e.toString())
+        e.set("lzcode", d.a.compressToEncodedURIComponent(f.getValue())), alert("URL updated."), location.assign(location.protocol + location.pathname + "?" + e.toString())
     }, {
         passive: !0
     });
