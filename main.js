@@ -48,7 +48,7 @@
     e.exports = 'error'
 }, function (e, n) {
    //  e.exports = '<style>\n  .navPage:not(.visible) {\n    display: none;\n  }\n\n  .navWrapper {\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n  }\n  \n  .navButton {\n    margin: 5px 10px;\n    padding: 10px;\n    background: #2976f2;\n  }\n\n  [data-to-page] {\n    cursor: pointer;\n  }\n</style>\n\n<nav class="navWrapper">\n  <div class="navButton" data-to-page="home">Home</div>\n  <div class="navButton" data-to-page="test">Test</div>\n</nav>\n\n<hr>\n\n<div class="navPage visible" data-page="home">\n  Home\n  <a data-to-page="test">Go to test page</a>\n</div>\n\n<div class="navPage" data-page="test">\n  Test\n</div>\n\n<script>\n  function showPage(pageName) {\n    var oldPages = Array.from(document.querySelectorAll(\'div.navPage.visible\'))\n    oldPages.forEach(function (page) { page.classList.remove(\'visible\') })\n\n    var page = document.querySelector(\'[data-page="\' + pageName + `"]`)\n    if (!page) return\n\n    page.classList.add(\'visible\')\n  }\n\n  document.addEventListener(\'click\', function (event) {\n    if (!event.target) return;\n    if (event.target.getAttribute(\'data-to-page\')) {\n      showPage(event.target.getAttribute(\'data-to-page\'))\n    }\n  })\n<\/script>'
-    e.exports = 'Paste your code here and press the share button (Remove this). \nUse a link shortner to shorten the URL. \nThanks to [Bibliofile](https://github.com/Bibliofile) for the code. \nModified by [m1ten](https://m1ten.ga/). \nThis website uses cookies.'
+    e.exports = 'Paste your code here and press the share button. \nUse a link shortener to shorten the URL. \nThanks to [Bibliofile](https://github.com/Bibliofile) for the code. \nModified by [m1ten](https://m1ten.ga/). \nThis website uses cookies.'
 }, function (e, n, t) {
     var o, r = function () {
         var e = String.fromCharCode,
@@ -277,11 +277,11 @@
     const m = () => new URLSearchParams(location.href.includes("?") ? location.href.substr(location.href.indexOf("?")) : ""),
         v = m();
     let b = null != localStorage.getItem("userInput") ? localStorage.getItem("userInput") : s.a;
-    v.has("code") && (b = v.get("code")), v.has("lzcode") && (b = d.a.decompressFromEncodedURIComponent(v.get("lzcode"))), f.setValue(b), h.srcdoc = r.a.replace("[CONTENT]", b), document.querySelector("button.run").addEventListener("click", () => {
+    v.has("code") && (b = v.get("code")), v.has("new") && (b = d.a.decompressFromEncodedURIComponent(v.get("new"))), f.setValue(b), h.srcdoc = r.a.replace("[CONTENT]", b), document.querySelector("button.run").addEventListener("click", () => {
         h.srcdoc = r.a.replace("[CONTENT]", f.getValue())
     }), document.querySelector("button.share").addEventListener("click", () => {
         const e = m();
-        e.set("lzcode", d.a.compressToEncodedURIComponent(f.getValue())), alert("URL updated."), location.assign(location.protocol + location.pathname + "?" + e.toString())
+        e.set("new", d.a.compressToEncodedURIComponent(f.getValue())), alert("URL updated."), location.assign(location.protocol + location.pathname + "?" + e.toString())
     }, {
         passive: !0
     });
